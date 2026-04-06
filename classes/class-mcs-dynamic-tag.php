@@ -1,6 +1,9 @@
 <?php
+use \Elementor\Core\DynamicTags\Tag;
+use \Elementor\Modules\DynamicTags\Module;
+use \Elementor\Controls_Manager;
 
-class MCS_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
+class MCS_Dynamic_Tag extends Tag {
 
     public function get_name() {
         return 'mcs-field';
@@ -15,7 +18,7 @@ class MCS_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
     }
 
     public function get_categories() {
-        return [ \Elementor\Modules\DynamicTags\Module::TEXT_CATEGORY ];
+        return [ Module::TEXT_CATEGORY ];
     }
 
     protected function register_controls() {
@@ -23,7 +26,7 @@ class MCS_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
             'key',
             [
                 'label' => 'Key',
-                'type' => \Elementor\Controls_Manager::TEXT,
+                'type' => Controls_Manager::TEXT,
             ]
         );
     }

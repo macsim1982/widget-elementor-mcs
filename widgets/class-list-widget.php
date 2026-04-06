@@ -1,5 +1,4 @@
 <?php
-use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
 class List_Widget_Elementor extends MCS_Widget_Base {
@@ -144,7 +143,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'content_section',
 			[
 				'label' => esc_html__( 'List Content', 'elementor-list-widget' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
@@ -155,7 +154,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'text',
 			[
 				'label' => esc_html__( 'Text', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'placeholder' => esc_html__( 'List Item', 'elementor-list-widget' ),
 				'default' => esc_html__( 'List Item', 'elementor-list-widget' ),
 				'label_block' => true,
@@ -169,7 +168,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'link',
 			[
 				'label' => esc_html__( 'Link', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::URL,
+				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -181,7 +180,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'list_items',
 			[
 				'label' => esc_html__( 'List Items', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::REPEATER,
+				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),           /* Use our repeater */
 				'default' => [
 					[
@@ -206,7 +205,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'marker_section',
 			[
 				'label' => esc_html__( 'List Marker', 'elementor-list-widget' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
@@ -214,7 +213,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'marker_type',
 			[
 				'label' => esc_html__( 'Marker Type', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'ordered' => [
 						'title' => esc_html__( 'Ordered List', 'elementor-list-widget' ),
@@ -238,7 +237,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'marker_content',
 			[
 				'label' => esc_html__( 'Custom Marker', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'placeholder' => esc_html__( 'Enter custom marker', 'elementor-list-widget' ),
 				'default' => '🧡',
 				'condition' => [
@@ -256,7 +255,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'style_content_section',
 			[
 				'label' => esc_html__( 'List Style', 'elementor-list-widget' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -264,7 +263,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'title_color',
 			[
 				'label' => esc_html__( 'Color', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-list-widget-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .elementor-list-widget-text > a' => 'color: {{VALUE}};',
@@ -294,7 +293,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'style_marker_section',
 			[
 				'label' => esc_html__( 'Marker Style', 'elementor-list-widget' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -302,7 +301,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'marker_color',
 			[
 				'label' => esc_html__( 'Color', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-list-widget-text::marker' => 'color: {{VALUE}};',
 				],
@@ -313,7 +312,7 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 			'marker_spacing',
 			[
 				'label' => esc_html__( 'Spacing', 'elementor-list-widget' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [

@@ -1,6 +1,4 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
-
 class Booking_list_Widget extends MCS_Widget_Base {
 
     public function get_name() {

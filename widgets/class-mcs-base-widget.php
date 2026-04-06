@@ -1,6 +1,7 @@
 <?php 
+use Elementor\Widget_Base;
 
-abstract class MCS_Widget_Base extends \Elementor\Widget_Base {
+abstract class MCS_Widget_Base extends Widget_Base {
 
     protected $slug;
 

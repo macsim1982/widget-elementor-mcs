@@ -1,5 +1,4 @@
 <?php
-use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
 class Mon_Widget_Elementor extends MCS_Widget_Base {
