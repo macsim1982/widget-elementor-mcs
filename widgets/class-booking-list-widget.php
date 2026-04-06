@@ -1,79 +1,79 @@
 <?php
-class Booking_list_Widget extends MCS_Widget_Base {
 
-    public function get_name() {
-        return 'booking_list';
+use Elementor\Controls_Manager;
+
+class Booking_List_Widget extends MCS_Widget_Base {
+
+    protected string $slug = 'booking-list-widget';
+
+    public function get_name(): string {
+        return 'booking_list_widget';
     }
 
-    public function get_title() {
-        return 'Booking List';
+    public function get_title(): string {
+        return esc_html__( 'Booking List', 'widget-elementor-mcs' );
     }
 
-    public function get_icon() {
+    public function get_icon(): string {
         return 'eicon-calendar';
     }
 
-    public function get_categories() {
+    public function get_categories(): array {
         return [ 'mcs-category' ];
     }
 
-    protected function register_controls() {
-
-        // SECTION CONTENT
+    protected function register_controls(): void {
         $this->start_controls_section(
             'section_content',
             [
-                'label' => 'Content',
+                'label' => esc_html__( 'Content', 'widget-elementor-mcs' ),
             ]
         );
 
-        // TITLE
         $this->add_control(
             'title',
             [
-                'label' => 'Title',
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'My Title',
+                'label' => esc_html__( 'Title', 'widget-elementor-mcs' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( 'My Title', 'widget-elementor-mcs' ),
             ]
         );
 
         $this->add_control(
             'title_color',
             [
-                'label' => 'Title Color',
-                'type' => \Elementor\Controls_Manager::COLOR,
+                'label' => esc_html__( 'Title Color', 'widget-elementor-mcs' ),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .custom-title' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .custom-title' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
-        // DESCRIPTION
         $this->add_control(
             'description',
             [
-                'label' => 'Description',
-                'type' => \Elementor\Controls_Manager::TEXTAREA,
+                'label' => esc_html__( 'Description', 'widget-elementor-mcs' ),
+                'type' => Controls_Manager::TEXTAREA,
             ]
         );
 
         $this->add_control(
             'description_color',
             [
-                'label' => 'Description Color',
-                'type' => \Elementor\Controls_Manager::COLOR,
+                'label' => esc_html__( 'Description Color', 'widget-elementor-mcs' ),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .custom-description' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .custom-description' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
-        // FORMS MULTISELECT
         $this->add_control(
             'forms',
             [
-                'label' => 'Select Forms',
-                'type' => \Elementor\Controls_Manager::SELECT2,
+                'label' => esc_html__( 'Select Forms', 'widget-elementor-mcs' ),
+                'type' => Controls_Manager::SELECT2,
                 'multiple' => true,
                 'options' => $this->get_forms_options(),
                 'label_block' => true,
@@ -83,99 +83,79 @@ class Booking_list_Widget extends MCS_Widget_Base {
         $this->end_controls_section();
     }
 
-    /**
-     * Get forms list (example - adapt depending on plugin used)
-     */
-    private function get_forms_options() {
+    private function get_forms_options(): array {
         $forms = [];
 
-        // Exemple avec posts type "form"
         $query = get_posts([
             'post_type' => 'form',
-            'numberposts' => -1
+            'post_status' => 'publish',
+            'numberposts' => -1,
         ]);
 
-        foreach ($query as $form) {
-            $forms[$form->ID] = $form->post_title;
+        foreach ( $query as $form ) {
+            $forms[ $form->ID ] = get_the_title( $form );
         }
 
         return $forms;
     }
 
-    protected function render() {
+    protected function render(): void {
         $settings = $this->get_settings_for_display();
+        $forms = $settings['forms'] ?? [];
 
-        // var_dump($settings); // Debug settings values
-
-        $forms = $settings['forms'];
-
-        if (empty($forms)) {
+        if ( empty( $forms ) ) {
+            echo '<p>' . esc_html__( 'Aucun formulaire sélectionné.', 'widget-elementor-mcs' ) . '</p>';
             return;
         }
 
-        // QUERY POSTS LINKED TO FORMS
         $args = [
             'post_type' => 'booking',
+            'post_status' => 'publish',
             'posts_per_page' => -1,
             'meta_query' => [
                 [
-                    'key' => 'linked_form', // ACF / meta field
+                    'key' => 'linked_form',
                     'value' => $forms,
-                    'compare' => 'IN'
-                ]
-            ]
+                    'compare' => 'IN',
+                ],
+            ],
         ];
 
-        $query = new WP_Query($args);
-
-        // BUILD ARRAY OF VALUES FOR FRONT
+        $query = new WP_Query( $args );
         $data = [];
 
-        if ($query->have_posts()) {
-            while ($query->have_posts()) {
+        if ( $query->have_posts() ) {
+            while ( $query->have_posts() ) {
                 $query->the_post();
 
                 $data[] = [
                     'id' => get_the_ID(),
                     'title' => get_the_title(),
                     'link' => get_permalink(),
-                    'form_id' => get_post_meta(get_the_ID(), 'linked_form', true),
+                    'form_id' => get_post_meta( get_the_ID(), 'linked_form', true ),
                 ];
             }
         }
 
         wp_reset_postdata();
         ?>
-
         <div class="custom-widget">
+            <h2 class="custom-title"><?php echo esc_html( $settings['title'] ); ?></h2>
+            <p class="custom-description"><?php echo esc_html( $settings['description'] ); ?></p>
 
-            <h2 class="custom-title"><?php echo esc_html($settings['title']); ?></h2>
-            <p class="custom-description"><?php echo esc_html($settings['description']); ?></p>
-
-            <div class="custom-posts">
-                <?php
-
-                // fallback rendering
-                foreach ($data as $item) {
-                ?>
-                    <div class="booking-item">
-                        <h3><a href="<?php echo esc_url($item['link']); ?>"><?php echo esc_html($item['title']); ?></a></h3>
-                        <p>Form ID: <?php echo esc_html($item['form_id']); ?></p>
-                        with data: <?php var_dump($item); ?>
-                    </div>
-                <?php
-                }
-                ?>
-            </div>
-
+            <?php if ( empty( $data ) ) : ?>
+                <p><?php echo esc_html__( 'Aucun booking trouvé pour les formulaires sélectionnés.', 'widget-elementor-mcs' ); ?></p>
+            <?php else : ?>
+                <div class="custom-posts">
+                    <?php foreach ( $data as $item ) : ?>
+                        <div class="booking-item">
+                            <h3><a href="<?php echo esc_url( $item['link'] ); ?>"><?php echo esc_html( $item['title'] ); ?></a></h3>
+                            <p><?php echo esc_html__( 'Form ID:', 'widget-elementor-mcs' ) . ' ' . esc_html( $item['form_id'] ); ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
-
-        <script>
-            // DATA usable in front JS
-            const customWidgetData = <?php echo json_encode($data); ?>;
-            console.log('Forms linked posts:', customWidgetData);
-        </script>
-
         <?php
     }
 }

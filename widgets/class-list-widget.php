@@ -4,93 +4,30 @@ use Elementor\Controls_Manager;
 class List_Widget_Elementor extends MCS_Widget_Base {
     protected $slug = 'list-widget';
 
-    /**
-	 * Get widget name.
-	 *
-	 * Retrieve list widget name.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget name.
-	 */
 	public function get_name(): string {
 		return 'list_widget';
 	}
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve list widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget title.
-	 */
 	public function get_title(): string {
 		return esc_html__( 'List Widget', 'elementor-list-widget' );
 	}
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve list widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget icon.
-	 */
 	public function get_icon(): string {
 		return 'eicon-bullet-list';
 	}
 
-	/**
-	 * Get widget categories.
-	 *
-	 * Retrieve the list of categories the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget categories.
-	 */
 	public function get_categories(): array {
 		return [ 'mcs-category' ];
 	}
 
-	/**
-	 * Get widget keywords.
-	 *
-	 * Retrieve the list of keywords the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget keywords.
-	 */
 	public function get_keywords(): array {
 		return [ 'list', 'lists', 'ordered', 'unordered' ];
 	}
 
-	/**
-	 * Get custom help URL.
-	 *
-	 * Retrieve a URL where the user can get more information about the widget.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget help URL.
-	 */
 	public function get_custom_help_url(): string {
 		return 'https://developers.elementor.com/docs/widgets/';
 	}
 
-	/**
-	 * Get widget promotion data.
-	 *
-	 * Retrieve the widget promotion data.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @return array Widget promotion data.
-	 */
 	protected function get_upsale_data(): array {
 		return [
 			'condition' => true,
@@ -103,40 +40,14 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 		];
 	}
 
-	/**
-	 * Whether the widget requires inner wrapper.
-	 *
-	 * Determine whether to optimize the DOM size.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return bool Whether to optimize the DOM size.
-	 */
 	public function has_widget_inner_wrapper(): bool {
 		return false;
 	}
 
-	/**
-	 * Whether the element returns dynamic content.
-	 *
-	 * Determine whether to cache the element output or not.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @return bool Whether to cache the element output.
-	 */
 	protected function is_dynamic_content(): bool {
 		return false;
 	}
 
-	/**
-	 * Register list widget controls.
-	 *
-	 * Add input fields to allow the user to customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
 	protected function register_controls(): void {
 
 		$this->start_controls_section(
@@ -343,14 +254,6 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 
 	}
 
-	/**
-	 * Render list widget output on the frontend.
-	 *
-	 * Written in PHP and used to generate the final HTML.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$html_tag = [
@@ -387,14 +290,6 @@ class List_Widget_Elementor extends MCS_Widget_Base {
 		<?php
 	}
 
-	/**
-	 * Render list widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
 	protected function content_template(): void {
 		?>
 		<#
