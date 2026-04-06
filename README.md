@@ -24,6 +24,17 @@ It includes:
 1. Copy the plugin folder into `wp-content/plugins/widget-elementor-mcs`
 2. Activate the plugin from the WordPress admin
 3. Make sure Elementor is installed and active
+4. Build the plugin assets if you are developing locally
+
+### Build assets
+
+From the plugin root directory:
+
+```bash
+npm install
+npm run dev    # development/watch mode
+npm run build  # production build
+```
 
 ## Structure
 
